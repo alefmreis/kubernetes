@@ -24,8 +24,12 @@ nodes:
     protocol: TCP
 EOF
 
-kubectl config get-contexts
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=90s
 
+kubectl config get-contexts
 kubectl config use-context <clusterName>
 
 - criar namespace para a nossa aplicação
