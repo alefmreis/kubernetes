@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-techtalk
+  namespace: techtalk
+spec:
+  selector:
+    matchLabels:
+      app: app-techtalk
+  replicas: 1
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: app-techtalk
+    spec:
+      containers:
+      - name: app-techtalk
+        image: 86624399/app-techtalk:1.0.1
+        ports:
+        - containerPort: 3500
+          protocol: TCP
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            memory: 50Mi  
+        env:
+        - name: PORT
+          value: "3500"
+        # envFrom:
+        # - configMapRef:
+        #     name: app-techtalk
+        # - secretRef:
+        #     name: app-techtalk        
+      imagePullSecrets:
+      - name: registry-secret

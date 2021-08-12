@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: app-techtalk
+  namespace: techtalk  
+spec:
+  rules:
+  - host: "api.techtalk.com.br"
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: app-techtalk
+            servicePort: 80
